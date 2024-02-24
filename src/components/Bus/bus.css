@@ -1,0 +1,32 @@
+.bus-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.upper-deck,
+.lower-deck {
+    width: 40%;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+.seats {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.seat {
+    width: 100px;
+    height: 20px;
+    border: 1px solid #9a2828;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.occupied {
+    background-color: #ccc;
+}

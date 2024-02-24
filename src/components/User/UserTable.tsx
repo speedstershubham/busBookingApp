@@ -9,18 +9,27 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material'
-import React from 'react'
-import TUser from '../types/TUser'
+import React, { useEffect, useState } from 'react'
+import IFormData from '../../types/IFormData'
 
-type tableProp = {
-    data: TUser[]
-}
+const UserTable: React.FC = () => {
+    const [formData, setFormData] = useState<IFormData[]>([])
 
-const TableMui: React.FC<tableProp> = ({ data }) => {
-    const keys = Object?.keys(data[0] || {})
+    useEffect(() => {
+        // Retrieve data from localStorage
+        const existingFormData = localStorage.getItem('formData')
+        if (existingFormData) {
+            // Parse the data if it exists
+            const parsedFormData: IFormData[] = JSON.parse(existingFormData)
+            setFormData(parsedFormData)
+        }
+    }, [])
+
+    const keys = Object?.keys(formData[0] || {})
+    console.log('formData', formData)
     return (
         <Box>
-            {data?.length === 0 ? (
+            {formData?.length === 0 ? (
                 <p>
                     Start today to track your work <br /> Create Your Routine{' '}
                 </p>
@@ -38,18 +47,25 @@ const TableMui: React.FC<tableProp> = ({ data }) => {
                         </TableHead>
                         <TableBody>
                             {/* Render todoList items in table rows */}
-                            {data?.map((dat) => (
+                            {formData?.map((dat) => (
                                 <TableRow key={dat._id}>
-                                    {/* Display todo item details in table cells */}
+                                    <TableCell>
+                                        {dat._id.slice(0, 4) +
+                                            '...' +
+                                            dat._id.slice(-4)}
+                                    </TableCell>
+                                    <TableCell>{dat.name}</TableCell>
+                                    <TableCell>{dat.contactNumber}</TableCell>
+                                    <TableCell>{dat.email}</TableCell>
+                                    <TableCell>{dat.seatNumber}</TableCell>
                                     <TableCell>
                                         {new Date(
-                                            dat.createdAt
+                                            dat.bookingDate
                                         ).toLocaleDateString()}
                                     </TableCell>
-                                    <TableCell>{dat.firstName}</TableCell>
-                                    {/* Add more cells for additional fields */}
-                                    {/* <TableCell>{todo.routineTime}</TableCell> */}
-                                    {/* Action buttons */}
+                                    <TableCell>{dat.from}</TableCell>
+                                    <TableCell>{dat.to}</TableCell>
+                                    <TableCell>{dat.age}</TableCell>
                                     <TableCell>
                                         <Button
                                             variant="contained"
@@ -75,4 +91,4 @@ const TableMui: React.FC<tableProp> = ({ data }) => {
     )
 }
 
-export default TableMui
+export default UserTable

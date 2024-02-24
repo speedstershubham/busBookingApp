@@ -1,17 +1,19 @@
 import { Box, Grid, Paper } from '@mui/material'
 import React from 'react'
+import userData from '../../dummyData/userData'
+import UserTable from './UserTable'
 
-const Booking = () => {
+const User: React.FC = () => {
     return (
         <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
-            minHeight="100vh"
+            minHeight="20vh"
         >
             <Paper elevation={3} style={{ padding: '20px', width: '80%' }}>
-                <Grid container spacing={3}>
-                    {/* First Column */}
+                <UserTable />
+                {/* <Grid container spacing={3}>
                     <Grid
                         item
                         xs={12}
@@ -20,9 +22,8 @@ const Booking = () => {
                         justifyContent="center"
                         alignItems="center"
                     >
-                        {/* <TodoTable setUpdateTodo={setNewTodo} /> */}
+                        <UserTable data={userData} />
                     </Grid>
-                    {/* Second Column */}
                     <Grid
                         item
                         xs={12}
@@ -32,13 +33,12 @@ const Booking = () => {
                         alignItems="center"
                     >
                         <Box textAlign="center">
-                            {/* <Form updateTodo={updateTodo} /> */}
                         </Box>
                     </Grid>
-                </Grid>
+                </Grid> */}
             </Paper>
         </Box>
     )
 }
 
-export default Booking
+export default User

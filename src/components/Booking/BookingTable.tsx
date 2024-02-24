@@ -1,6 +1,6 @@
+/* eslint-disable react/jsx-key */
 import {
     Box,
-    Button,
     Paper,
     Table,
     TableBody,
@@ -9,14 +9,13 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material'
-import React from 'react'
-import TUser from '../types/TUser'
+import TBooking from '../../types/TBooking'
 
 type tableProp = {
-    data: TUser[]
+    data: TBooking[]
 }
 
-const TableMui: React.FC<tableProp> = ({ data }) => {
+const BookingTable: React.FC<tableProp> = ({ data }) => {
     const keys = Object?.keys(data[0] || {})
     return (
         <Box>
@@ -30,10 +29,8 @@ const TableMui: React.FC<tableProp> = ({ data }) => {
                         <TableHead>
                             <TableRow>
                                 {keys?.map((key) => (
-                                    <TableCell key={key}>{key}</TableCell>
+                                    <TableCell>{key}</TableCell>
                                 ))}
-                                <TableCell>Action</TableCell>{' '}
-                                {/* New cell for actions */}
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -41,30 +38,37 @@ const TableMui: React.FC<tableProp> = ({ data }) => {
                             {data?.map((dat) => (
                                 <TableRow key={dat._id}>
                                     {/* Display todo item details in table cells */}
+                                    <TableCell>{dat._id}</TableCell>
+
+                                    <TableCell>{dat.userId}</TableCell>
+                                    <TableCell>{dat.seatId}</TableCell>
                                     <TableCell>
                                         {new Date(
                                             dat.createdAt
                                         ).toLocaleDateString()}
                                     </TableCell>
-                                    <TableCell>{dat.firstName}</TableCell>
-                                    {/* Add more cells for additional fields */}
-                                    {/* <TableCell>{todo.routineTime}</TableCell> */}
-                                    {/* Action buttons */}
                                     <TableCell>
-                                        <Button
-                                            variant="contained"
-                                            onClick={() => console.log(dat)}
-                                        >
-                                            Edit
-                                        </Button>
-                                        <Button
-                                            variant="contained"
-                                            color="error"
-                                            onClick={() => console.log(dat._id)}
-                                        >
-                                            Delete
-                                        </Button>
+                                        {new Date(
+                                            dat.travelDate
+                                        ).toLocaleDateString()}
                                     </TableCell>
+                                    <TableCell>{dat.numOfSeats}</TableCell>
+                                    <TableCell>
+                                        {dat.bookingRoutes.to}
+                                    </TableCell>
+                                    <TableCell>
+                                        {dat.bookingRoutes.from}
+                                    </TableCell>
+
+                                    {/* <TableCell>{todo.routineTime}</TableCell> */}
+                                    {/* <TableCell>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => setUpdateTodo(todo)}
+                                >
+                                    Edit
+                                </Button>
+                            </TableCell> */}
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -75,4 +79,4 @@ const TableMui: React.FC<tableProp> = ({ data }) => {
     )
 }
 
-export default TableMui
+export default BookingTable

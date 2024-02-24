@@ -1,9 +1,32 @@
-import React from 'react'
+import { Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
-const Header = () => {
-  return (
-    <div>Header</div>
-  )
+const Header: React.FC = () => {
+    const navigate = useNavigate()
+    return (
+        <header>
+            <nav>
+                <ul>
+                    <li>
+                        <Button
+                            onClick={() => navigate('/booking')}
+                            color="inherit"
+                        >
+                            Booking
+                        </Button>
+                    </li>
+                    <li>
+                        <Button
+                            onClick={() => navigate('/user')}
+                            color="inherit"
+                        >
+                            User
+                        </Button>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    )
 }
 
 export default Header

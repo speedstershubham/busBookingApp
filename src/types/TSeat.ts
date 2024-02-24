@@ -1,3 +1,5 @@
+import DeckTypes from '../components/Bus/DeckTypes'
+
 type TSeat = {
     _id: string
     seatType: string
@@ -5,10 +7,11 @@ type TSeat = {
     createdAt: Date
     seatStatus: {
         available: boolean
-        Reserved: boolean
+        reserved: boolean // Changed 'Reserved' to 'reserved'
         maleSeat: boolean
         femaleSeat: boolean
     }
+    deck: DeckTypes
 }
 
 export default TSeat
