@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal'
 import BookingForm from './Booking/BookingForm'
 import TSeat from '../types/TSeat'
 import { Typography } from '@mui/material'
+import IFormData from '../types/IFormData'
 
 const style = {
     position: 'absolute',
@@ -22,11 +23,13 @@ interface bookingProps {
     open: boolean
     setOpen: (isOpen: boolean) => void
     seatDetail: TSeat
+    bookingDetail?: IFormData
 }
 const BookingModal: React.FC<bookingProps> = ({
     open,
     setOpen,
     seatDetail,
+    bookingDetail,
 }) => {
     const handleClose = (): void => setOpen(false)
     return (
@@ -46,17 +49,21 @@ const BookingModal: React.FC<bookingProps> = ({
                     >
                         <Box>
                             <Typography variant="h6">
-                                Book Seat {seatDetail.seatNo}
+                                Book Seat {seatDetail?.seatNumber}
                             </Typography>
                         </Box>
-                        {seatDetail.seatStatus.femaleSeat && (
+                        {seatDetail?.seatStatus?.femaleSeat && (
                             <Box>
                                 <Typography variant="h6">For Women</Typography>
                             </Box>
                         )}
                     </Box>
 
-                    <BookingForm setOpen={setOpen} seatDetail={seatDetail} />
+                    <BookingForm
+                        setOpen={setOpen}
+                        seatDetail={seatDetail}
+                        bookingDetail={bookingDetail}
+                    />
                 </Box>
             </Modal>
         </div>

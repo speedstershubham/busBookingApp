@@ -17,10 +17,10 @@ const Header: React.FC = () => {
                     </li>
                     <li>
                         <Button
-                            onClick={() => navigate('/user')}
+                            onClick={() => navigate('/Dashboard')}
                             color="inherit"
                         >
-                            User
+                            Dashboard
                         </Button>
                     </li>
                 </ul>

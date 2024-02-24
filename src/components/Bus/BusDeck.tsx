@@ -26,7 +26,7 @@ const BusDeck: React.FC<busDeckProps> = ({
                             <Paper
                                 className={`seat ${seat ? 'occupied' : ''}`}
                                 onClick={() => {
-                                    if (seat.seatStatus.available) {
+                                    if (seat.available) {
                                         setOpen(true)
                                         setSeatDetail(seat)
                                     }
@@ -34,16 +34,16 @@ const BusDeck: React.FC<busDeckProps> = ({
                                 style={{
                                     backgroundColor:
                                         seat.seatStatus.femaleSeat &&
-                                        seat.seatStatus.available
+                                        seat.available
                                             ? 'pink'
-                                            : !seat.seatStatus.available
+                                            : !seat.available
                                               ? 'grey'
                                               : 'white',
                                     padding: '5px',
                                     textAlign: 'center',
                                 }}
                             >
-                                {seat.seatNo}
+                                {seat.seatNumber}
                             </Paper>
                         </Grid>
                     ))}
@@ -62,7 +62,7 @@ const BusDeck: React.FC<busDeckProps> = ({
                             <Paper
                                 className={`seat ${seat ? 'occupied' : ''}`}
                                 onClick={() => {
-                                    if (seat.seatStatus.available) {
+                                    if (seat.available) {
                                         setOpen(true)
                                         setSeatDetail(seat)
                                     }
@@ -70,16 +70,16 @@ const BusDeck: React.FC<busDeckProps> = ({
                                 style={{
                                     backgroundColor:
                                         seat.seatStatus.femaleSeat &&
-                                        seat.seatStatus.available
+                                        seat.available
                                             ? 'pink'
-                                            : !seat.seatStatus.available
+                                            : !seat.available
                                               ? 'grey'
                                               : 'white',
                                     padding: '5px',
                                     textAlign: 'center',
                                 }}
                             >
-                                {seat.seatNo}
+                                {seat.seatNumber}
                             </Paper>
                         </Grid>
                     ))}

@@ -15,8 +15,8 @@ const AppRoute: React.FC = () => {
                 </DashboardLayout>
             ),
             children: [
-                { element: <Header />, index: true },
-                { path: 'user', element: <User /> },
+                { element: <User />, index: true },
+                { path: 'dashboard', element: <User /> },
                 { path: 'booking', element: <Booking /> },
             ],
         },

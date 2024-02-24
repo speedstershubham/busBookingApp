@@ -3,11 +3,11 @@ import DeckTypes from '../components/Bus/DeckTypes'
 type TSeat = {
     _id: string
     seatType: string
-    seatNo: number
+    seatNumber: number
+    userId: string
     createdAt: Date
+    available: boolean
     seatStatus: {
-        available: boolean
-        reserved: boolean // Changed 'Reserved' to 'reserved'
         maleSeat: boolean
         femaleSeat: boolean
     }

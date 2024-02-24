@@ -5,26 +5,38 @@ import Button from '@mui/material/Button'
 import TSeat from '../../types/TSeat'
 import { Autocomplete } from '@mui/material'
 import IFormData from '../../types/IFormData'
+import useSeats from '../../hooks/useSeat'
+import { useLocation, useNavigate } from 'react-router-dom'
+import useBooking from '../../hooks/useBooking'
 
 interface bookingFormProps {
     setOpen: (isOpen: boolean) => void
-
     seatDetail: TSeat
+    bookingDetail?: IFormData
 }
 
-const BookingForm: React.FC<bookingFormProps> = ({ setOpen, seatDetail }) => {
+const BookingForm: React.FC<bookingFormProps> = ({
+    setOpen,
+    seatDetail,
+    bookingDetail,
+}) => {
+    console.log('bookingDetail', bookingDetail)
     const [formData, setFormData] = useState<IFormData>({
-        _id: uuidv4(),
-        name: '',
-        contactNumber: '',
-        email: '',
-        seatNumber: seatDetail.seatNo,
-        bookingDate: '',
-        from: '',
-        to: '',
-        age: '',
+        _id: bookingDetail?._id || uuidv4(),
+        name: bookingDetail?.name || '',
+        contactNumber: bookingDetail?.contactNumber || '',
+        email: bookingDetail?.email || '',
+        seatNumber: bookingDetail?.seatNumber || seatDetail?.seatNumber,
+        bookingDate: bookingDetail?.bookingDate || '',
+        from: bookingDetail?.from || '',
+        to: bookingDetail?.to || '',
+        age: bookingDetail?.age || '',
     })
-
+    const { saveBooking } = useBooking()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const data = location.state
+    console.log('data', data, seatDetail)
     // useEffect(() => {
     //     const storedFormData = localStorage.getItem('formData')
     //     if (storedFormData) {
@@ -46,20 +58,10 @@ const BookingForm: React.FC<bookingFormProps> = ({ setOpen, seatDetail }) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
-
-        let storedFormData: IFormData[] = []
-        const existingFormData = localStorage.getItem('formData')
-        console.log('existingFormData', existingFormData)
-        if (existingFormData) {
-            storedFormData = JSON.parse(existingFormData)
-        }
-
-        // Push each form data separately instead of pushing the whole array
-        storedFormData.push(formData)
-
-        localStorage.setItem('formData', JSON.stringify(storedFormData))
+        saveBooking(formData, seatDetail)
         setOpen(false)
         // Here you can handle form submission, for now, let's just log the data
+        navigate('/Dashboard')
         console.log(formData)
     }
 

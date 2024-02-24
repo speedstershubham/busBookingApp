@@ -11,10 +11,20 @@ import {
 } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import IFormData from '../../types/IFormData'
+import useSeats from '../../hooks/useSeat'
+import { useNavigate } from 'react-router-dom'
 
-const UserTable: React.FC = () => {
+interface IUserTableProps {
+    setBookingDetail: (data: IFormData) => void
+    setOpen: (isOpen: boolean) => void
+}
+
+const UserTable: React.FC<IUserTableProps> = ({
+    setBookingDetail,
+    setOpen,
+}) => {
     const [formData, setFormData] = useState<IFormData[]>([])
-
+    // const { updateSeatData } = useSeats()
     useEffect(() => {
         // Retrieve data from localStorage
         const existingFormData = localStorage.getItem('formData')
@@ -24,9 +34,13 @@ const UserTable: React.FC = () => {
             setFormData(parsedFormData)
         }
     }, [])
-
-    const keys = Object?.keys(formData[0] || {})
     console.log('formData', formData)
+    const navigate = useNavigate()
+
+    // const removeBooking = () => {
+    //     // updateSeatData()
+    // }
+    const keys = Object?.keys(formData[0] || {})
     return (
         <Box>
             {formData?.length === 0 ? (
@@ -69,7 +83,10 @@ const UserTable: React.FC = () => {
                                     <TableCell>
                                         <Button
                                             variant="contained"
-                                            onClick={() => console.log(dat)}
+                                            onClick={() => {
+                                                setBookingDetail(dat)
+                                                setOpen(true)
+                                            }}
                                         >
                                             Edit
                                         </Button>

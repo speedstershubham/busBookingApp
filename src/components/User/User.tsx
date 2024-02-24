@@ -1,9 +1,42 @@
 import { Box, Grid, Paper } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import userData from '../../dummyData/userData'
 import UserTable from './UserTable'
+import BookingModal from '../BookingModal'
+import IFormData from '../../types/IFormData'
+import TSeat from '../../types/TSeat'
+import DeckTypes from '../Bus/DeckTypes'
 
 const User: React.FC = () => {
+    const [open, setOpen] = useState(false)
+    const [bookingDetail, setBookingDetail] = useState<IFormData>()
+    const [seatList, setSeatList] = useState<TSeat[]>([]) // Initialize as an empty array
+
+    useEffect(() => {
+        const storedSeatData: string | null = localStorage.getItem('seatData')
+        if (storedSeatData) {
+            const seatDataArray: TSeat[] = JSON.parse(storedSeatData)
+            setSeatList(seatDataArray)
+        }
+    }, []) // Run once on component mount
+
+    const seatDetail = seatList?.find(
+        (seat) => seat.seatNumber === bookingDetail?.seatNumber
+    )
+
+    const defaultSeatDetail: TSeat = {
+        _id: '1',
+        seatType: 'Standard',
+        userId: '',
+        seatNumber: 1,
+        createdAt: new Date('2024-02-21T08:00:00Z'),
+        available: true,
+        seatStatus: {
+            maleSeat: true,
+            femaleSeat: false,
+        },
+        deck: DeckTypes.UPPER_DECK,
+    }
     return (
         <Box
             display="flex"
@@ -12,31 +45,19 @@ const User: React.FC = () => {
             minHeight="20vh"
         >
             <Paper elevation={3} style={{ padding: '20px', width: '80%' }}>
-                <UserTable />
-                {/* <Grid container spacing={3}>
-                    <Grid
-                        item
-                        xs={12}
-                        sm={6}
-                        container
-                        justifyContent="center"
-                        alignItems="center"
-                    >
-                        <UserTable data={userData} />
-                    </Grid>
-                    <Grid
-                        item
-                        xs={12}
-                        sm={6}
-                        container
-                        justifyContent="center"
-                        alignItems="center"
-                    >
-                        <Box textAlign="center">
-                        </Box>
-                    </Grid>
-                </Grid> */}
+                <UserTable
+                    setBookingDetail={setBookingDetail}
+                    setOpen={setOpen}
+                />
             </Paper>
+            {open && bookingDetail && (
+                <BookingModal
+                    open={open}
+                    setOpen={setOpen}
+                    bookingDetail={bookingDetail}
+                    seatDetail={seatDetail || defaultSeatDetail}
+                />
+            )}
         </Box>
     )
 }
