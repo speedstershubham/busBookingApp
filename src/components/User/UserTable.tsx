@@ -11,8 +11,7 @@ import {
 } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import IFormData from '../../types/IFormData'
-import useSeats from '../../hooks/useSeat'
-import { useNavigate } from 'react-router-dom'
+import useBooking from '../../hooks/useBooking'
 
 interface IUserTableProps {
     setBookingDetail: (data: IFormData) => void
@@ -34,8 +33,8 @@ const UserTable: React.FC<IUserTableProps> = ({
             setFormData(parsedFormData)
         }
     }, [])
-    console.log('formData', formData)
-    const navigate = useNavigate()
+
+    const { deleteFormDataById } = useBooking()
 
     // const removeBooking = () => {
     //     // updateSeatData()
@@ -93,7 +92,12 @@ const UserTable: React.FC<IUserTableProps> = ({
                                         <Button
                                             variant="contained"
                                             color="error"
-                                            onClick={() => console.log(dat._id)}
+                                            onClick={() =>
+                                                deleteFormDataById(
+                                                    dat._id,
+                                                    dat.seatNumber
+                                                )
+                                            }
                                         >
                                             Delete
                                         </Button>

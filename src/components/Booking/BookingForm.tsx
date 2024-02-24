@@ -34,16 +34,6 @@ const BookingForm: React.FC<bookingFormProps> = ({
     })
     const { saveBooking } = useBooking()
     const navigate = useNavigate()
-    const location = useLocation()
-    const data = location.state
-    console.log('data', data, seatDetail)
-    // useEffect(() => {
-    //     const storedFormData = localStorage.getItem('formData')
-    //     if (storedFormData) {
-    //         setFormData(JSON.parse(storedFormData))
-    //     }
-    // }, [])
-
     const handleChange = (
         e: React.ChangeEvent<
             HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -60,7 +50,6 @@ const BookingForm: React.FC<bookingFormProps> = ({
         e.preventDefault()
         saveBooking(formData, seatDetail)
         setOpen(false)
-        // Here you can handle form submission, for now, let's just log the data
         navigate('/Dashboard')
         console.log(formData)
     }

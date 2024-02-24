@@ -3,7 +3,7 @@ interface IFormData {
     name: string
     contactNumber: string | number
     email: string
-    seatNumber?: number | undefined
+    seatNumber: number
     bookingDate: string
     from: string
     to: string
