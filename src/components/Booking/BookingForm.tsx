@@ -45,6 +45,7 @@ const BookingForm: React.FC<bookingFormProps> = ({
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+        //here i am not handle the api that why I not use try and catch other it will come inside tryCatch block
         e.preventDefault()
         saveBooking(formFieldData, seatDetail)
         setOpen(false)

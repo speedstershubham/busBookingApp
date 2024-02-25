@@ -31,7 +31,6 @@ const useBooking = (): IUseBookingResponse => {
         // Retrieve data from localStorage
         getSetFormData()
     }, [])
-    console.log('formList', formList)
     const saveBooking = (newData: IFormData, seatDetail: TSeat): void => {
         let storedFormData: IFormData[] = []
         if (existingFormData) {
