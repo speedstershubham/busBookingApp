@@ -3,10 +3,11 @@ import TextField from '@mui/material/TextField'
 import { v4 as uuidv4 } from 'uuid'
 import Button from '@mui/material/Button'
 import TSeat from '../../types/TSeat'
-import { Autocomplete } from '@mui/material'
+import { Autocomplete, MenuItem } from '@mui/material'
 import IFormData from '../../types/IFormData'
 import { useNavigate } from 'react-router-dom'
 import useBooking from '../../hooks/useBooking'
+import getCurrentDate from '../../helpers/getCurrentDate'
 
 interface bookingFormProps {
     setOpen: (isOpen: boolean) => void
@@ -26,6 +27,9 @@ const BookingForm: React.FC<bookingFormProps> = ({
         email: bookingDetail?.email || '',
         seatNumber: bookingDetail?.seatNumber || seatDetail?.seatNumber,
         bookingDate: bookingDetail?.bookingDate || '',
+        gender: seatDetail?.seatStatus?.femaleSeat
+            ? 'Female'
+            : bookingDetail?.gender || '',
         from: bookingDetail?.from || '',
         to: bookingDetail?.to || '',
         age: bookingDetail?.age || '',
@@ -79,6 +83,27 @@ const BookingForm: React.FC<bookingFormProps> = ({
                 fullWidth
                 margin="normal"
             />
+            {!bookingDetail?.gender && (
+                <TextField
+                    label="Gender"
+                    name="gender"
+                    value={formFieldData.gender}
+                    onChange={handleChange}
+                    select
+                    fullWidth
+                    disabled={seatDetail?.seatStatus?.femaleSeat}
+                    margin="normal"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                >
+                    {['Male', 'Female'].map((option, index) => (
+                        <MenuItem key={index} value={option}>
+                            {option}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            )}
             <Autocomplete
                 options={[
                     'New York',
@@ -152,6 +177,9 @@ const BookingForm: React.FC<bookingFormProps> = ({
                 margin="normal"
                 InputLabelProps={{
                     shrink: true,
+                }}
+                inputProps={{
+                    min: getCurrentDate(), // Set minimum date to the current date
                 }}
             />
             <Button

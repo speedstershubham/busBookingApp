@@ -24,7 +24,18 @@ const UserTable: React.FC<IUserTableProps> = ({
 }) => {
     const navigate = useNavigate()
     const { formList, deleteFormDataById } = useBooking()
-    const keys = Object?.keys(formList[0] || {})
+    const fields: { name: string; label: string }[] = [
+        { name: '_id', label: 'ID' },
+        { name: 'name', label: 'Name' },
+        { name: 'contactNumber', label: 'Contact Number' },
+        { name: 'email', label: 'Email' },
+        { name: 'gender', label: 'Gender' },
+        { name: 'seatNumber', label: 'Seat Number' },
+        { name: 'bookingDate', label: 'Booking Date' },
+        { name: 'from', label: 'From' },
+        { name: 'to', label: 'To' },
+        { name: 'age', label: 'Age' },
+    ]
     return (
         <Box>
             {formList?.length === 0 ? (
@@ -40,8 +51,10 @@ const UserTable: React.FC<IUserTableProps> = ({
                     <Table stickyHeader>
                         <TableHead>
                             <TableRow>
-                                {keys?.map((key) => (
-                                    <TableCell key={key}>{key}</TableCell>
+                                {fields?.map((field) => (
+                                    <TableCell key={field.name}>
+                                        {field.label}
+                                    </TableCell>
                                 ))}
                                 <TableCell>Action</TableCell>{' '}
                                 {/* New cell for actions */}
@@ -59,6 +72,7 @@ const UserTable: React.FC<IUserTableProps> = ({
                                     <TableCell>{dat.name}</TableCell>
                                     <TableCell>{dat.contactNumber}</TableCell>
                                     <TableCell>{dat.email}</TableCell>
+                                    <TableCell>{dat.gender}</TableCell>
                                     <TableCell>{dat.seatNumber}</TableCell>
                                     <TableCell>
                                         {new Date(
