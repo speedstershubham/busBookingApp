@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 import { v4 as uuidv4 } from 'uuid'
 import Button from '@mui/material/Button'
 import TSeat from '../../types/TSeat'
 import { Autocomplete } from '@mui/material'
 import IFormData from '../../types/IFormData'
-import useSeats from '../../hooks/useSeat'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import useBooking from '../../hooks/useBooking'
 
 interface bookingFormProps {
@@ -159,10 +158,10 @@ const BookingForm: React.FC<bookingFormProps> = ({
                 variant="contained"
                 color="primary"
                 disabled={
-                    !formFieldData ||
+                    !formFieldData.name ||
+                    !formFieldData.email ||
                     typeof formFieldData.contactNumber !== 'string' ||
-                    formFieldData.contactNumber.length !== 10 ||
-                    (!formFieldData.name && !formFieldData.email)
+                    formFieldData.contactNumber.length !== 10
                 }
             >
                 Submit
