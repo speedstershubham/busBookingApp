@@ -140,6 +140,7 @@ const BookingForm: React.FC<bookingFormProps> = ({
                 InputLabelProps={{
                     shrink: true,
                 }}
+                inputProps={{ min: '0', step: '1' }}
             />
             <TextField
                 label="Date of Booking"
