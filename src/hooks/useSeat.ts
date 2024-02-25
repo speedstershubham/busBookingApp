@@ -3,9 +3,6 @@ import TSeat from '../types/TSeat'
 import seatData from '../dummyData/seatData'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import DeckTypes from '../components/Bus/DeckTypes'
-import IFormData from '../types/IFormData'
-
-
 interface IUseSeatsParams {
   deckType?: DeckTypes | undefined
 }
@@ -31,8 +28,6 @@ const useSeats = ({ deckType }: IUseSeatsParams): IUseSeatsResponse => {
 
     }
   }, [])
-
-
 
   const filteredSeats = seats?.filter((seat) => seat.deck === deckType)
 

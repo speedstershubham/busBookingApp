@@ -9,9 +9,9 @@ import {
     TableHead,
     TableRow,
 } from '@mui/material'
-import React, { useEffect, useState } from 'react'
 import IFormData from '../../types/IFormData'
 import useBooking from '../../hooks/useBooking'
+import { useNavigate } from 'react-router-dom'
 
 interface IUserTableProps {
     setBookingDetail: (data: IFormData) => void
@@ -22,30 +22,19 @@ const UserTable: React.FC<IUserTableProps> = ({
     setBookingDetail,
     setOpen,
 }) => {
-    const [formData, setFormData] = useState<IFormData[]>([])
-    // const { updateSeatData } = useSeats()
-    useEffect(() => {
-        // Retrieve data from localStorage
-        const existingFormData = localStorage.getItem('formData')
-        if (existingFormData) {
-            // Parse the data if it exists
-            const parsedFormData: IFormData[] = JSON.parse(existingFormData)
-            setFormData(parsedFormData)
-        }
-    }, [])
-
-    const { deleteFormDataById } = useBooking()
-
-    // const removeBooking = () => {
-    //     // updateSeatData()
-    // }
-    const keys = Object?.keys(formData[0] || {})
+    const navigate = useNavigate()
+    const { formList, deleteFormDataById } = useBooking()
+    const keys = Object?.keys(formList[0] || {})
     return (
         <Box>
-            {formData?.length === 0 ? (
-                <p>
-                    Start today to track your work <br /> Create Your Routine{' '}
-                </p>
+            {formList?.length === 0 ? (
+                <Button
+                    variant="contained"
+                    onClick={() => navigate('/booking')}
+                >
+                    {' '}
+                    Book Your Seat
+                </Button>
             ) : (
                 <TableContainer component={Paper} style={{ maxHeight: 400 }}>
                     <Table stickyHeader>
@@ -60,7 +49,7 @@ const UserTable: React.FC<IUserTableProps> = ({
                         </TableHead>
                         <TableBody>
                             {/* Render todoList items in table rows */}
-                            {formData?.map((dat) => (
+                            {formList?.map((dat) => (
                                 <TableRow key={dat._id}>
                                     <TableCell>
                                         {dat._id.slice(0, 4) +
@@ -81,6 +70,7 @@ const UserTable: React.FC<IUserTableProps> = ({
                                     <TableCell>{dat.age}</TableCell>
                                     <TableCell>
                                         <Button
+                                            sx={{ marginRight: '10px' }}
                                             variant="contained"
                                             onClick={() => {
                                                 setBookingDetail(dat)

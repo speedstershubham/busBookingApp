@@ -20,8 +20,7 @@ const BookingForm: React.FC<bookingFormProps> = ({
     seatDetail,
     bookingDetail,
 }) => {
-    console.log('bookingDetail', bookingDetail)
-    const [formData, setFormData] = useState<IFormData>({
+    const [formFieldData, setFormFieldData] = useState<IFormData>({
         _id: bookingDetail?._id || uuidv4(),
         name: bookingDetail?.name || '',
         contactNumber: bookingDetail?.contactNumber || '',
@@ -40,18 +39,17 @@ const BookingForm: React.FC<bookingFormProps> = ({
         >
     ): void => {
         const { name, value } = e.target
-        setFormData({
-            ...formData,
+        setFormFieldData({
+            ...formFieldData,
             [name]: value,
         })
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
-        saveBooking(formData, seatDetail)
+        saveBooking(formFieldData, seatDetail)
         setOpen(false)
-        navigate('/Dashboard')
-        console.log(formData)
+        navigate('/')
     }
 
     return (
@@ -59,7 +57,7 @@ const BookingForm: React.FC<bookingFormProps> = ({
             <TextField
                 label="Name"
                 name="name"
-                value={formData.name}
+                value={formFieldData.name}
                 onChange={handleChange}
                 fullWidth
                 margin="normal"
@@ -68,7 +66,7 @@ const BookingForm: React.FC<bookingFormProps> = ({
                 label="Contact Number"
                 name="contactNumber"
                 type="number"
-                value={formData.contactNumber}
+                value={formFieldData.contactNumber}
                 onChange={handleChange}
                 fullWidth
                 margin="normal"
@@ -76,7 +74,7 @@ const BookingForm: React.FC<bookingFormProps> = ({
             <TextField
                 label="Email"
                 name="email"
-                value={formData.email}
+                value={formFieldData.email}
                 onChange={handleChange}
                 fullWidth
                 margin="normal"
@@ -98,10 +96,10 @@ const BookingForm: React.FC<bookingFormProps> = ({
                         margin="normal"
                     />
                 )}
-                value={formData.from}
+                value={formFieldData.from}
                 onChange={(event, newValue) => {
-                    setFormData({
-                        ...formData,
+                    setFormFieldData({
+                        ...formFieldData,
                         from: newValue || '',
                     })
                 }}
@@ -123,10 +121,10 @@ const BookingForm: React.FC<bookingFormProps> = ({
                         margin="normal"
                     />
                 )}
-                value={formData.to}
+                value={formFieldData.to}
                 onChange={(event, newValue) => {
-                    setFormData({
-                        ...formData,
+                    setFormFieldData({
+                        ...formFieldData,
                         to: newValue || '',
                     })
                 }}
@@ -135,7 +133,7 @@ const BookingForm: React.FC<bookingFormProps> = ({
                 label="Age"
                 name="age"
                 type="number"
-                value={formData.age}
+                value={formFieldData.age}
                 onChange={handleChange}
                 fullWidth
                 margin="normal"
@@ -147,7 +145,7 @@ const BookingForm: React.FC<bookingFormProps> = ({
                 label="Date of Booking"
                 name="bookingDate"
                 type="date"
-                value={formData.bookingDate}
+                value={formFieldData.bookingDate}
                 onChange={handleChange}
                 fullWidth
                 margin="normal"
@@ -155,7 +153,17 @@ const BookingForm: React.FC<bookingFormProps> = ({
                     shrink: true,
                 }}
             />
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={
+                    !formFieldData ||
+                    typeof formFieldData.contactNumber !== 'string' ||
+                    formFieldData.contactNumber.length !== 10 ||
+                    (!formFieldData.name && !formFieldData.email)
+                }
+            >
                 Submit
             </Button>
         </form>

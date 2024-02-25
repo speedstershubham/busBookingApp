@@ -1,8 +1,7 @@
 import { Box, Grid, Paper } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import userData from '../../dummyData/userData'
 import UserTable from './UserTable'
-import BookingModal from '../BookingModal'
+import BookingModal from '../Booking/BookingModal'
 import IFormData from '../../types/IFormData'
 import TSeat from '../../types/TSeat'
 import DeckTypes from '../Bus/DeckTypes'
@@ -44,12 +43,8 @@ const User: React.FC = () => {
             alignItems="center"
             minHeight="20vh"
         >
-            <Paper elevation={3} style={{ padding: '20px', width: '80%' }}>
-                <UserTable
-                    setBookingDetail={setBookingDetail}
-                    setOpen={setOpen}
-                />
-            </Paper>
+            <UserTable setBookingDetail={setBookingDetail} setOpen={setOpen} />
+
             {open && bookingDetail && (
                 <BookingModal
                     open={open}

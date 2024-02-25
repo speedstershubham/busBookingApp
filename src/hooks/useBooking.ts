@@ -3,30 +3,37 @@ import IFormData from '../types/IFormData'
 import useSeats from './useSeat'
 import DeckTypes from '../components/Bus/DeckTypes'
 import TSeat from '../types/TSeat'
+import { atom, useAtom } from 'jotai'
 interface IUseBookingResponse {
-    formData: IFormData[]
+    formList: IFormData[]
     saveBooking: (newData: IFormData, seatDetail: TSeat) => void
     deleteFormDataById: (id: string, seatNumber: number) => void
 }
+const formListAtom = atom<IFormData[]>([])
 
 const useBooking = (): IUseBookingResponse => {
-    const [formData, setFormData] = useState<IFormData[]>([])
+    // const [formData, setFormData] = useAtom<IFormData[]>([])
+    const [formList, setFormList] = useAtom(formListAtom)
     const { updateSeatData } = useSeats({
         deckType: DeckTypes.LOWER_DECK,
     })
+    const existingFormData = localStorage.getItem('formData')
 
-    useEffect(() => {
-        // Retrieve data from localStorage
-        const existingFormData = localStorage.getItem('formData')
+    const getSetFormData = (): void => {
         if (existingFormData) {
             // Parse the data if it exists
             const parsedFormData: IFormData[] = JSON.parse(existingFormData)
-            setFormData(parsedFormData)
+            // setFormData(parsedFormData)
+            setFormList(parsedFormData)
         }
+    }
+    useEffect(() => {
+        // Retrieve data from localStorage
+        getSetFormData()
     }, [])
+    console.log('formList', formList)
     const saveBooking = (newData: IFormData, seatDetail: TSeat): void => {
         let storedFormData: IFormData[] = []
-        const existingFormData = localStorage.getItem('formData')
         if (existingFormData) {
             storedFormData = JSON.parse(existingFormData)
         }
@@ -43,17 +50,16 @@ const useBooking = (): IUseBookingResponse => {
             // If no data with the same ID exists, add the new data
             storedFormData.push(newData)
         }
-
         localStorage.setItem('formData', JSON.stringify(storedFormData))
         updateSeatData(seatDetail.seatNumber, {
             userId: newData._id,
             available: false,
         })
+        setFormList(storedFormData)
     }
 
     const deleteFormDataById = (id: string, seatNumber: number): void => {
         let storedFormData: IFormData[] = []
-        const existingFormData = localStorage.getItem('formData')
         if (existingFormData) {
             storedFormData = JSON.parse(existingFormData)
         }
@@ -69,12 +75,13 @@ const useBooking = (): IUseBookingResponse => {
                 userId: '',
                 available: true,
             })
+            setFormList(storedFormData)
         } else {
             console.log(`Form data with ID ${id} not found.`)
         }
     }
 
-    return { formData, saveBooking, deleteFormDataById }
+    return { formList, saveBooking, deleteFormDataById }
 }
 
 export default useBooking

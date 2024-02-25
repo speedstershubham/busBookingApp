@@ -1,10 +1,12 @@
 import './App.css'
 import AppRoute from './router/AppRoute'
-
+import { Provider } from 'jotai'
 const App: React.FC = () => {
     return (
         <div className="App">
-            <AppRoute />
+            <Provider>
+                <AppRoute />
+            </Provider>
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import { Container, Grid, Paper } from '@mui/material'
 import './bus.css'
-import BookingModal from '../BookingModal'
+import BookingModal from '../Booking/BookingModal'
 import { useState } from 'react'
 import UpperDeck from './UpperDeck'
 import LowerDeck from './LowerDeck'

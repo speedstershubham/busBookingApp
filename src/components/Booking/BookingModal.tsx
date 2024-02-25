@@ -2,10 +2,10 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
-import BookingForm from './Booking/BookingForm'
-import TSeat from '../types/TSeat'
+import BookingForm from './BookingForm'
+import TSeat from '../../types/TSeat'
 import { Typography } from '@mui/material'
-import IFormData from '../types/IFormData'
+import IFormData from '../../types/IFormData'
 
 const style = {
     position: 'absolute',

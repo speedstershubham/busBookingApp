@@ -7,7 +7,7 @@ const Header: React.FC = () => {
         <AppBar position="static">
             <Toolbar>
                 <Typography variant="h6" style={{ flexGrow: 1 }}>
-                    Your Website Name
+                    Yolo Bus
                 </Typography>
                 <nav>
                     <ul
@@ -28,7 +28,7 @@ const Header: React.FC = () => {
                         </li>
                         <li style={{ margin: '0 10px' }}>
                             <Button
-                                onClick={() => navigate('/dashboard')}
+                                onClick={() => navigate('/')}
                                 color="inherit"
                             >
                                 Dashboard
