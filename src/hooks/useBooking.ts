@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import IFormData from '../types/IFormData'
 import useSeats from './useSeat'
 import DeckTypes from '../components/Bus/DeckTypes'
