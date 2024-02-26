@@ -5,6 +5,7 @@ import { useState } from 'react'
 import UpperDeck from './UpperDeck'
 import LowerDeck from './LowerDeck'
 import TSeat from '../../types/TSeat'
+import CardGrid from './CardGrid'
 
 const Bus: React.FC = () => {
     const [open, setOpen] = useState(false)
@@ -51,6 +52,7 @@ const Bus: React.FC = () => {
                     seatDetail={seatDetail}
                 />
             ) : null}
+            {/* <CardGrid /> */}
         </Container>
     )
 }
