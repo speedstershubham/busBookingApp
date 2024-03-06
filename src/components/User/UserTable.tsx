@@ -8,10 +8,12 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    TextField,
 } from '@mui/material'
 import IFormData from '../../types/IFormData'
 import useBooking from '../../hooks/useBooking'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 interface IUserTableProps {
     setBookingDetail: (data: IFormData) => void
@@ -24,6 +26,7 @@ const UserTable: React.FC<IUserTableProps> = ({
 }) => {
     const navigate = useNavigate()
     const { formList, deleteFormDataById } = useBooking()
+    const [filteredData, setFilteredData] = useState<IFormData[]>()
     const fields: { name: string; label: string }[] = [
         { name: '_id', label: 'ID' },
         { name: 'name', label: 'Name' },
@@ -36,6 +39,20 @@ const UserTable: React.FC<IUserTableProps> = ({
         { name: 'to', label: 'To' },
         { name: 'age', label: 'Age' },
     ]
+    const handleSearch = (
+        e: React.ChangeEvent<
+            HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+        >
+    ): void => {
+        const { value } = e.target
+        const newFormList = formList.filter(
+            (form) => form.contactNumber === value
+        )
+        setFilteredData(newFormList)
+    }
+
+    const newFormList = filteredData?.length ? filteredData : formList
+
     return (
         <Box>
             {formList?.length === 0 ? (
@@ -48,6 +65,13 @@ const UserTable: React.FC<IUserTableProps> = ({
                 </Button>
             ) : (
                 <TableContainer component={Paper} style={{ maxHeight: 400 }}>
+                    <Box>
+                        <TextField
+                            placeholder="Mobile Number"
+                            type="text"
+                            onChange={(e) => handleSearch(e)}
+                        />
+                    </Box>
                     <Table stickyHeader>
                         <TableHead>
                             <TableRow>
@@ -62,7 +86,7 @@ const UserTable: React.FC<IUserTableProps> = ({
                         </TableHead>
                         <TableBody>
                             {/* Render todoList items in table rows */}
-                            {formList?.map((dat) => (
+                            {newFormList?.map((dat) => (
                                 <TableRow key={dat._id}>
                                     <TableCell>
                                         {dat._id.slice(0, 4) +
