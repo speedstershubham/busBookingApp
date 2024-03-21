@@ -20,7 +20,23 @@ const Header: React.FC = () => {
                     >
                         <li style={{ margin: '0 10px' }}>
                             <Button
-                                onClick={() => navigate('/booking')}
+                                onClick={() => navigate('/register')}
+                                color="inherit"
+                            >
+                                Register
+                            </Button>
+                        </li>
+                        <li style={{ margin: '0 10px' }}>
+                            <Button
+                                onClick={() => navigate('/bus')}
+                                color="inherit"
+                            >
+                                Buses
+                            </Button>
+                        </li>{' '}
+                        <li style={{ margin: '0 10px' }}>
+                            <Button
+                                onClick={() => navigate('/bus/booking')}
                                 color="inherit"
                             >
                                 Booking

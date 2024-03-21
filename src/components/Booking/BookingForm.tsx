@@ -8,6 +8,7 @@ import IFormData from '../../types/IFormData'
 import { useNavigate } from 'react-router-dom'
 import useBooking from '../../hooks/useBooking'
 import getCurrentDate from '../../helpers/getCurrentDate'
+import CoreTextField from '../../commonComponents/CoreTextField'
 
 interface bookingFormProps {
     setOpen: (isOpen: boolean) => void
@@ -58,29 +59,26 @@ const BookingForm: React.FC<bookingFormProps> = ({
 
     return (
         <form onSubmit={handleSubmit}>
-            <TextField
+            <CoreTextField
                 label="Name"
                 name="name"
                 value={formFieldData.name}
                 onChange={handleChange}
-                fullWidth
                 margin="normal"
             />
-            <TextField
+            <CoreTextField
                 label="Contact Number"
                 name="contactNumber"
                 type="number"
                 value={formFieldData.contactNumber}
                 onChange={handleChange}
-                fullWidth
                 margin="normal"
             />
-            <TextField
+            <CoreTextField
                 label="Email"
                 name="email"
                 value={formFieldData.email}
                 onChange={handleChange}
-                fullWidth
                 margin="normal"
             />
             {!bookingDetail?.gender && (

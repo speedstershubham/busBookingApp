@@ -3,25 +3,36 @@ import TSeat from '../types/TSeat'
 import seatData from '../dummyData/seatData'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import DeckTypes from '../components/Bus/DeckTypes'
+import useBus from './useProduct'
+import { useLocation } from 'react-router-dom'
 interface IUseSeatsParams {
   deckType?: DeckTypes | undefined
+  noOfSeat?: number | undefined
 }
 interface IUseSeatsResponse {
   seats: TSeat[]
-  setSeats: Dispatch<SetStateAction<TSeat[]>>
+  setSeatList: Dispatch<SetStateAction<TSeat[]>>
   updateSeatData: (seatId: number, newData: Partial<TSeat>) => void
   // saveBooking: (seatId: number, newData: Partial<IFormData>) => void
 }
 const useSeats = ({ deckType }: IUseSeatsParams): IUseSeatsResponse => {
 
-  const [seats, setSeats] = useState<TSeat[]>([]);
-
+  // const [seats, setSeats] = useState<TSeat[]>([]);
+  const { seatList, setSeatList } = useBus()
+  const location = useLocation();
+  const data = location.state;
   useEffect(() => {
     const storedSeatData = localStorage.getItem('seatData');
+
     if (storedSeatData) {
       // Parse the stored data back to an array before setting
-      setSeats(JSON.parse(storedSeatData));
+      const newBusSeat = JSON.parse(storedSeatData)
+      setSeatList(newBusSeat);
 
+
+      // setSeatList(newSeatData);
+
+      console.log("seatList", seatList)
     }
     else {
       localStorage.setItem('seatData', JSON.stringify(seatData));
@@ -29,7 +40,7 @@ const useSeats = ({ deckType }: IUseSeatsParams): IUseSeatsResponse => {
     }
   }, [])
 
-  const filteredSeats = seats?.filter((seat) => seat.deck === deckType)
+  const filteredSeats = seatList?.filter((seat) => seat.deck === deckType)
 
   const updateSeatData = (seatNumber?: number, newData?: Partial<TSeat>): void => {
     // Retrieve seat data from local storage
@@ -59,7 +70,7 @@ const useSeats = ({ deckType }: IUseSeatsParams): IUseSeatsResponse => {
 
 
 
-  return { seats: filteredSeats, setSeats, updateSeatData }
+  return { seats: filteredSeats, setSeatList, updateSeatData }
 }
 
 export default useSeats

@@ -58,7 +58,7 @@ const UserTable: React.FC<IUserTableProps> = ({
             {formList?.length === 0 ? (
                 <Button
                     variant="contained"
-                    onClick={() => navigate('/booking')}
+                    onClick={() => navigate('/bus/booking')}
                 >
                     {' '}
                     Book Your Seat

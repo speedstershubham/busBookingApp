@@ -24,7 +24,7 @@ const BusDeck: React.FC<BusDeckProps> = ({
             </Grid>
             <Grid item xs={11}>
                 <Grid container justifyContent="center" spacing={1}>
-                    {data.map((seat, index) => (
+                    {data?.map((seat, index) => (
                         <Grid key={index} item xs={3}>
                             <ChairOutlinedIcon
                                 onClick={() => {

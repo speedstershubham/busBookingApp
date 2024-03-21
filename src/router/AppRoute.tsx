@@ -3,6 +3,8 @@ import Booking from '../components/Booking/Booking'
 import User from '../components/User/User'
 import DashboardLayout from '../layout'
 import { Suspense } from 'react'
+import Register from '../components/Register/Register'
+import Product from '../components/Product/Product'
 const AppRoute: React.FC = () => {
     const router = createBrowserRouter([
         {
@@ -15,7 +17,9 @@ const AppRoute: React.FC = () => {
             ),
             children: [
                 { element: <User />, index: true },
-                { path: 'booking', element: <Booking /> },
+                { path: '/bus/booking', element: <Booking /> },
+                { path: 'register', element: <Register /> },
+                { path: 'bus', element: <Product /> },
             ],
         },
     ])
